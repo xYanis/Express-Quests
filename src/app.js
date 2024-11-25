@@ -1,10 +1,18 @@
-const express = require("express");
-
+// app.js
+const express = require('express');
 const app = express();
+const userRoutes = require('./routes/userRoutes'); // Importation des routes utilisateur
 
-const movieControllers = require("./controllers/movieControllers");
+// Middleware pour parser le corps des requêtes en JSON
+app.use(express.json());
 
-app.get("/api/movies", movieControllers.getMovies);
-app.get("/api/movies/:id", movieControllers.getMovieById);
+// Utilisation des routes pour les utilisateurs
+app.use('/api', userRoutes);
+
+// Démarrage du serveur
+const port = process.env.PORT || 3001;
+app.listen(port, () => {
+    console.log(`Server is running on http://localhost:${port}`);
+});
 
 module.exports = app;
